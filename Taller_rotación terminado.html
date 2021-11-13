@@ -1,0 +1,58 @@
+<canvas id='canvas' width=650 height=650>
+    <script>
+        function centroGeom(coordenada) {
+            tr = [0, 0]
+            vecX=coordenada[0], vetX=coordenada[0]  //valores extremos inferiores y superiores
+            vecY=coordenada[1], vetY=coordenada[1]  // en x y
+
+            for (i = 2; i < coordenada.length; i+=2){
+                if(vecX > coordenada[i]){
+                   vecX = coordenada[i];
+                }if(vetX < coordenada[i]){
+                   vetX = coordenada[i];
+            }}
+
+            for (i = 2; i < coordenada.length; i+=2){
+                if(vecY > coordenada[i]){
+                   vecY = coordenada[i];
+
+                }if(vetY < coordenada[i]){
+                   vetY = coordenada[i];
+            }}
+            
+            promX=-(vetX+vecX)/2;
+            promY=-(vetY+vecY)/2;
+            tr = [promX, promY]
+            return tr;
+        }
+
+        function polygon(a, colorBorde, colorRelleno) {
+            ctx.beginPath()
+            ctx.strokeStyle = colorBorde
+            ctx.fillStyle = colorRelleno
+            ctx.moveTo(a[0], a[1])
+            for (var i = 2; i < a.length; i += 2)
+                ctx.lineTo(a[i], a[i + 1]);
+            ctx.closePath()
+            ctx.stroke()
+            ctx.fill()
+        }
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+    
+        var coord = [68,24, 68, 40, 48, 40, 48, 34, 46, 30, 34,30, 32,34, 32, 42, 34, 45, 57, 45, 68, 58, 68, 81, 57, 93, 22, 93, 13, 81, 13, 68, 30, 68, 30, 73, 34, 76, 45, 76, 48, 74, 48, 64, 45, 63, 23,63, 11, 50, 11, 25, 23, 13, 55, 13];
+
+
+        polygon(coord, 'purple', 'red');
+
+        vt = centroGeom(coord);    // calcular el vecor de traslacion [x, y]
+        ctx.translate(-vt[0], -vt[1]);   // ubicacion centro de la figura en el origen de coordenadas
+
+        ctx.rotate(-4/48*Math.PI)  //ctx.rotate(75);
+
+        ctx.translate(vt[0], vt[1]);    // retorno de la figura al punto inicial
+
+        polygon(coord, 'red', 'yellow');
+
+    </script>
